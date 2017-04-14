@@ -82,10 +82,10 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
      */
     @Override
     public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
-        if (actionState != ItemTouchHelper.ACTION_STATE_IDLE) {
-            viewHolder.itemView.setBackgroundColor(Color.LTGRAY);
-        }
         super.onSelectedChanged(viewHolder, actionState);
+        if (actionState != ItemTouchHelper.ACTION_STATE_IDLE) {
+            viewHolder.itemView.setAlpha(0.5f);
+        }
     }
 
     /**
@@ -96,6 +96,6 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
     @Override
     public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
         super.clearView(recyclerView, viewHolder);
-        viewHolder.itemView.setBackgroundColor(Color.TRANSPARENT);
+        viewHolder.itemView.setAlpha(1.0f);
     }
 }
