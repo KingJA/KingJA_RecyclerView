@@ -1,5 +1,6 @@
 package com.kingja.recyclerview;
 
+import android.graphics.Color;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -11,11 +12,12 @@ import android.support.v7.widget.helper.ItemTouchHelper;
  * Email:kingjavip@gmail.com
  */
 public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
-    private final OnItemCallbackListener listen;
+    private final OnItemCallbackListener listenerAdapter;
 
-    public SimpleItemTouchHelperCallback(OnItemCallbackListener listen) {
-        this.listen = listen;
+    public SimpleItemTouchHelperCallback(OnItemCallbackListener listenerAdapter) {
+        this.listenerAdapter = listenerAdapter;
     }
+
 
     @Override
     public boolean isLongPressDragEnabled() {
@@ -27,8 +29,15 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
         return true;
     }
 
+    /**
+     * 设置位置变化方向
+     * @param recyclerView
+     * @param viewHolder
+     * @return
+     */
     @Override
     public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+        //如果为0则不能拖动或者滑动
         int dragFlags;
         int swipeFlags;
         if (recyclerView.getLayoutManager() instanceof GridLayoutManager) {
@@ -41,16 +50,52 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
         return makeMovementFlags(dragFlags, swipeFlags);
     }
 
+    /**
+     * 拖动改变位置
+     * @param recyclerView
+     * @param viewHolder
+     * @param target
+     * @return
+     */
     @Override
     public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder
             target) {
-        listen.onMove(viewHolder.getAdapterPosition(),
+        listenerAdapter.onMove(viewHolder.getAdapterPosition(),
                 target.getAdapterPosition());
         return true;
     }
 
+    /**
+     * 滑动
+     * @param viewHolder
+     * @param direction
+     */
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-        listen.onSwipe(viewHolder.getAdapterPosition());
+        listenerAdapter.onSwipe(viewHolder.getAdapterPosition());
+    }
+
+    /**
+     * 长按选中时
+     * @param viewHolder
+     * @param actionState
+     */
+    @Override
+    public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
+        if (actionState != ItemTouchHelper.ACTION_STATE_IDLE) {
+            viewHolder.itemView.setBackgroundColor(Color.LTGRAY);
+        }
+        super.onSelectedChanged(viewHolder, actionState);
+    }
+
+    /**
+     * 拖拽完成时
+     * @param recyclerView
+     * @param viewHolder
+     */
+    @Override
+    public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+        super.clearView(recyclerView, viewHolder);
+        viewHolder.itemView.setBackgroundColor(Color.TRANSPARENT);
     }
 }
