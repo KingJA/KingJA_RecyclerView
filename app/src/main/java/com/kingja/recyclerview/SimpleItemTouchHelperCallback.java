@@ -1,6 +1,5 @@
 package com.kingja.recyclerview;
 
-import android.graphics.Color;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -12,10 +11,15 @@ import android.support.v7.widget.helper.ItemTouchHelper;
  * Email:kingjavip@gmail.com
  */
 public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
-    private final OnItemCallbackListener listenerAdapter;
+    private final RecyclerViewHelper.OnItemCallback listenerAdapter;
+    private boolean dragable;
+    private boolean swipeable;
 
-    public SimpleItemTouchHelperCallback(OnItemCallbackListener listenerAdapter) {
+    public SimpleItemTouchHelperCallback(RecyclerViewHelper.OnItemCallback listenerAdapter, boolean dragable, boolean
+            swipeable) {
         this.listenerAdapter = listenerAdapter;
+        this.dragable = dragable;
+        this.swipeable = swipeable;
     }
 
 
@@ -31,6 +35,7 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
 
     /**
      * 设置位置变化方向
+     *
      * @param recyclerView
      * @param viewHolder
      * @return
@@ -42,16 +47,18 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
         int swipeFlags;
         if (recyclerView.getLayoutManager() instanceof GridLayoutManager) {
             dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
-            swipeFlags = 0;
+            swipeFlags = ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
         } else {
             dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN;
-            swipeFlags = 0;
+            swipeFlags = ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
         }
-        return makeMovementFlags(dragFlags, swipeFlags);
+
+        return makeMovementFlags(dragable ? dragFlags : 0, swipeable ? swipeFlags : 0);
     }
 
     /**
      * 拖动改变位置
+     *
      * @param recyclerView
      * @param viewHolder
      * @param target
@@ -67,6 +74,7 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
 
     /**
      * 滑动
+     *
      * @param viewHolder
      * @param direction
      */
@@ -77,6 +85,7 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
 
     /**
      * 长按选中时
+     *
      * @param viewHolder
      * @param actionState
      */
@@ -90,6 +99,7 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
 
     /**
      * 拖拽完成时
+     *
      * @param recyclerView
      * @param viewHolder
      */

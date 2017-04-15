@@ -14,7 +14,7 @@ import java.util.List;
  * Author:KingJA
  * Email:kingjavip@gmail.com
  */
-public class MoveableAdapter extends BaseRvAdaper<Data> implements OnItemCallbackListener {
+public class MoveableAdapter extends BaseRvAdaper<Data> implements RecyclerViewHelper.OnItemCallback {
 
 
     public MoveableAdapter(Context context, List<Data> list) {
