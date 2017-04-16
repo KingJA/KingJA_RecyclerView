@@ -35,8 +35,10 @@ public class MainActivity extends AppCompatActivity {
 //        //用外观模式来包装
         new RecyclerViewHelper.Builder(this)
                 .setCallbackAdapter(adapter)
-                .setLayoutStyle(LayoutHelper.LayoutStyle.GRID)
+                .setLayoutStyle(LayoutHelper.LayoutStyle.VERTICAL_LIST)
                 .setDividerHeight(1)
+                .setSwipeable(false)
+                .setDragable(false)
                 .setDividerColor(0xff00ff00)
                 .build()
                 .attachToRecyclerView(rv);
