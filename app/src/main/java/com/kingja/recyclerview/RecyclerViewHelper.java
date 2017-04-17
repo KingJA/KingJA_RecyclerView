@@ -11,11 +11,11 @@ import android.support.v7.widget.helper.ItemTouchHelper;
  * Email:kingjavip@gmail.com
  */
 public class RecyclerViewHelper {
-    private OnItemCallback onItemCallback;
+    private Object adapter;
     private ItemTouchHelper.Callback helperCallback;
     private boolean dragable;
     private boolean swipeable;
-    private final ItemTouchHelper itemTouchHelper;
+    private ItemTouchHelper itemTouchHelper;
     private Context context;
     private LayoutHelper.LayoutStyle layoutStyle;
     private int dividerHeight;
@@ -27,12 +27,20 @@ public class RecyclerViewHelper {
         this.dividerHeight = builder.dividerHeight;
         this.dividerColor = builder.dividerColor;
         this.context = builder.context;
-        this.onItemCallback = builder.onItemCallback;
+        this.adapter = builder.onItemCallback;
         this.layoutStyle = builder.layoutStyle;
         this.dragable = builder.dragable;
         this.swipeable = builder.swipeable;
-        helperCallback = new SimpleItemTouchHelperCallback(onItemCallback, dragable, swipeable);
-        itemTouchHelper = new ItemTouchHelper(helperCallback);
+        if (dragable || swipeable) {
+            if (adapter instanceof OnItemCallback) {
+                OnItemCallback callBackAdapter = (OnItemCallback) adapter;
+                helperCallback = new SimpleItemTouchHelperCallback(callBackAdapter, dragable, swipeable);
+                itemTouchHelper = new ItemTouchHelper(helperCallback);
+            } else {
+                throw new IllegalArgumentException("The adapter which is dragable or swipeable must implement the " +
+                        "OnItemCallback interface ");
+            }
+        }
     }
 
 
@@ -40,20 +48,22 @@ public class RecyclerViewHelper {
         if (recyclerView == null) {
             throw new IllegalArgumentException("The recyclerView attached can't be null");
         }
-        if (onItemCallback instanceof RecyclerView.Adapter) {
-            recyclerView.setAdapter((RecyclerView.Adapter) onItemCallback);
-        }
-        recyclerView.setLayoutManager(LayoutHelper.getLayoutManager(context, layoutStyle, columns));
-        if (layoutStyle == layoutStyle.GRID) {
-            recyclerView.addItemDecoration(new GridItemDecoration(
-                    context, dividerHeight, dividerColor));
-        } else {
-            recyclerView.addItemDecoration(new ListItemDecoration(
-                    context, layoutStyle, dividerHeight, dividerColor));
-        }
 
-
-        itemTouchHelper.attachToRecyclerView(recyclerView);
+        if (adapter instanceof RecyclerView.Adapter) {
+            RecyclerView.Adapter normalAdapter = (RecyclerView.Adapter) adapter;
+            recyclerView.setAdapter(normalAdapter);
+            recyclerView.setLayoutManager(LayoutHelper.getLayoutManager(context, layoutStyle, columns));
+            if (layoutStyle == layoutStyle.GRID) {
+                recyclerView.addItemDecoration(new GridItemDecoration(
+                        context, dividerHeight, dividerColor));
+            } else {
+                recyclerView.addItemDecoration(new ListItemDecoration(
+                        context, layoutStyle, dividerHeight, dividerColor));
+            }
+        }
+        if (dragable || swipeable) {
+            itemTouchHelper.attachToRecyclerView(recyclerView);
+        }
     }
 
     static class Builder {
@@ -66,11 +76,11 @@ public class RecyclerViewHelper {
         private int dividerColor;
         private int columns = 2;
         private LayoutHelper.LayoutStyle layoutStyle;
-        private OnItemCallback onItemCallback;
-        private boolean dragable = true;
-        private boolean swipeable = true;
+        private Object onItemCallback;
+        private boolean dragable;
+        private boolean swipeable;
 
-        public Builder setCallbackAdapter(OnItemCallback onItemCallback) {
+        public Builder setCallbackAdapter(Object onItemCallback) {
             this.onItemCallback = onItemCallback;
             return this;
         }

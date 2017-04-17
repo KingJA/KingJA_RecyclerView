@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
         RecyclerView rv = (RecyclerView) findViewById(R.id.rv);
         final MoveableAdapter adapter = new MoveableAdapter(this, datas);
+//        final NormalAdapter adapter = new NormalAdapter(this, datas);
 
         adapter.setOnItemClickListener(new BaseRvAdaper.OnItemClickListener<Data>() {
             @Override
@@ -37,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
                 .setCallbackAdapter(adapter)
                 .setLayoutStyle(LayoutHelper.LayoutStyle.VERTICAL_LIST)
                 .setDividerHeight(1)
-                .setSwipeable(false)
-                .setDragable(false)
+                .setSwipeable(true)
+                .setDragable(true)
                 .setDividerColor(0xff00ff00)
                 .build()
                 .attachToRecyclerView(rv);

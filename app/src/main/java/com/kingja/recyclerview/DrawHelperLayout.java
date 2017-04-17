@@ -5,12 +5,10 @@ import android.graphics.Rect;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.ViewDragHelper;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 /**
  * Description：TODO
@@ -30,6 +28,7 @@ public class DrawHelperLayout extends FrameLayout {
     private int mRange;
     private int mWidth;
     private int mHeight;
+    private OnRootClickListener onRootClickListener;
 
     public ViewGroup getContentView() {
         return mContentView;
@@ -268,40 +267,25 @@ public class DrawHelperLayout extends FrameLayout {
         return mViewDragHelper.shouldInterceptTouchEvent(ev);
     }
 
-    //    @Override
-//    public boolean onTouchEvent(MotionEvent event) {
-//        mViewDragHelper.processTouchEvent(event);
-//        return true;
-//    }
+    private float downX;
 
-    float x;
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                downX = event.getX();
+                break;
+            case MotionEvent.ACTION_MOVE:
+                break;
+            case MotionEvent.ACTION_UP:
+                float daltX = Math.abs(downX - event.getX());
+                if (daltX < 10 && onRootClickListener != null) {
+                    onRootClickListener.onRootClick();
+                }
+                break;
 
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            Log.i("test", "ACTION_DOWN");
-            mViewDragHelper.processTouchEvent(event);
-            x = event.getX();
-        } else if (event.getAction() == MotionEvent.ACTION_UP) {
-            Log.i("test", "ACTION_UP");
-            float daltX = Math.abs(x - event.getX());
-            if (daltX < 10) {
-
-
-                Toast.makeText(getContext(), "iteam点击。。。。",
-                        Toast.LENGTH_SHORT).show();
-
-            } else {
-                Log.i("test", "终于进来了");
-            }
         }
-
-        try {
-            mViewDragHelper.processTouchEvent(event);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        mViewDragHelper.processTouchEvent(event);
         return true;
     }
 
@@ -331,5 +315,14 @@ public class DrawHelperLayout extends FrameLayout {
         mWidth = getContentView().getMeasuredWidth();
         mHeight = getContentView().getMeasuredHeight();
 
+    }
+
+    public void setOnRootClickListener(OnRootClickListener onRootClickListener) {
+
+        this.onRootClickListener = onRootClickListener;
+    }
+
+    public interface OnRootClickListener {
+        void onRootClick();
     }
 }

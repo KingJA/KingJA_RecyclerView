@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:descendantFocusability="blocksDescendants"
+              android:orientation="vertical">
 
 
     <com.kingja.recyclerview.DrawHelperLayout
@@ -13,19 +14,19 @@
 
         <LinearLayout
             android:id="@+id/ll_root"
-            android:padding="20dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:orientation="vertical"
+            android:padding="20dp"
             >
 
             <TextView
-                android:layout_centerVertical="true"
                 android:id="@+id/tv_deviceName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="内容" />
+                android:layout_centerVertical="true"
+                android:text="内容"/>
 
 
         </LinearLayout>
@@ -36,13 +37,13 @@
             android:gravity="end">
 
             <TextView
-                android:background="#ff0000"
                 android:id="@+id/tv_delete"
                 android:layout_width="64dp"
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
+                android:background="#ff0000"
                 android:gravity="center"
-                android:text="删除" />
+                android:text="删除"/>
         </LinearLayout>
 
     </com.kingja.recyclerview.DrawHelperLayout>
