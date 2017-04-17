@@ -5,6 +5,10 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
+import com.kingja.recyclerviewhelper.BaseRvAdaper;
+import com.kingja.recyclerviewhelper.LayoutHelper;
+import com.kingja.recyclerviewhelper.RecyclerViewHelper;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,8 +27,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         RecyclerView rv = (RecyclerView) findViewById(R.id.rv);
-        final MoveableAdapter adapter = new MoveableAdapter(this, datas);
-//        final NormalAdapter adapter = new NormalAdapter(this, datas);
+//        final MoveableAdapter adapter = new MoveableAdapter(this, datas);
+        final NormalAdapter adapter = new NormalAdapter(this, datas);
 
         adapter.setOnItemClickListener(new BaseRvAdaper.OnItemClickListener<Data>() {
             @Override
@@ -38,8 +42,8 @@ public class MainActivity extends AppCompatActivity {
                 .setCallbackAdapter(adapter)
                 .setLayoutStyle(LayoutHelper.LayoutStyle.VERTICAL_LIST)
                 .setDividerHeight(1)
-                .setSwipeable(true)
-                .setDragable(true)
+//                .setSwipeable(true)
+//                .setDragable(true)
                 .setDividerColor(0xff00ff00)
                 .build()
                 .attachToRecyclerView(rv);

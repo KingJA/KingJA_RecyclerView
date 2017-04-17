@@ -1,4 +1,4 @@
-package com.kingja.recyclerview;
+package com.kingja.recyclerviewhelper;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -66,7 +66,7 @@ public class RecyclerViewHelper {
         }
     }
 
-    static class Builder {
+    public  static class Builder {
         public Builder(Context context) {
             this.context = context;
         }
@@ -124,7 +124,7 @@ public class RecyclerViewHelper {
         }
     }
 
-    interface OnItemCallback {
+    public interface OnItemCallback {
         void onMove(int fromPosition, int toPosition);
 
         void onSwipe(int position);

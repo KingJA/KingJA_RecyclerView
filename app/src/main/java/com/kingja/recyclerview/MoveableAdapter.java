@@ -3,9 +3,10 @@ package com.kingja.recyclerview;
 import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.kingja.recyclerviewhelper.BaseRvAdaper;
+import com.kingja.recyclerviewhelper.RecyclerViewHelper;
 
 import java.util.Collections;
 import java.util.List;

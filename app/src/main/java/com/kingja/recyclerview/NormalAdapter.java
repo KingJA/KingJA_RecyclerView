@@ -2,12 +2,12 @@ package com.kingja.recyclerview;
 
 import android.content.Context;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.Collections;
+import com.kingja.recyclerviewhelper.BaseRvAdaper;
+
 import java.util.List;
 
 /**

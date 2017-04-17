@@ -1,4 +1,4 @@
-package com.kingja.recyclerview;
+package com.kingja.recyclerviewhelper;
 
 import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;
@@ -12,7 +12,7 @@ import android.support.v7.widget.RecyclerView;
  * Email:kingjavip@gmail.com
  */
 public class LayoutHelper {
-    enum LayoutStyle {
+    public enum LayoutStyle {
         VERTICAL_LIST, HORIZONTAL_LIST, GRID
     }
 

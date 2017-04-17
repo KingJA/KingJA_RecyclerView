@@ -1,4 +1,4 @@
-package com.kingja.recyclerview;
+package com.kingja.recyclerviewhelper;
 
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -53,7 +53,7 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
             swipeFlags = ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
         }
 
-        return makeMovementFlags(dragable ? dragFlags : 0, swipeable ? swipeFlags : 0);
+        return ItemTouchHelper.Callback.makeMovementFlags(dragable ? dragFlags : 0, swipeable ? swipeFlags : 0);
     }
 
     /**

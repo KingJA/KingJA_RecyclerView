@@ -6,7 +6,7 @@
               android:orientation="vertical">
 
 
-    <com.kingja.recyclerview.DrawHelperLayout
+    <com.kingja.recyclerviewhelper.DrawHelperLayout
         android:id="@+id/mDrawHelperLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -46,7 +46,7 @@
                 android:text="删除"/>
         </LinearLayout>
 
-    </com.kingja.recyclerview.DrawHelperLayout>
+    </com.kingja.recyclerviewhelper.DrawHelperLayout>
 
 </LinearLayout>
 

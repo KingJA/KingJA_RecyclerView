@@ -1,4 +1,4 @@
-package com.kingja.recyclerview;
+package com.kingja.recyclerviewhelper;
 
 import android.content.Context;
 import android.util.TypedValue;
